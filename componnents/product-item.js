@@ -1,17 +1,19 @@
 import Link from "next/link";
 import styles from "./product-item.module.css"
+
 function ProductItem(props){
     return(
         <>
         <Link href={`/${props.id}`} >
-        <a className={styles.card} >
+        <span className={styles.card} >
         <h2>{props.title} &rarr;</h2>
         <p>{props.description}</p>
-        </a>
+        </span>
       </Link>
       </>
     );
 }
+
 
 
 export default ProductItem;

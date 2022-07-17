@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import product from "../data/data"
 import Products from '../componnents/products'
+import Link from 'next/link'
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -30,16 +30,16 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <a
+        <Link
           href="/"
-          target="_blank"
-          rel="noopener noreferrer"
         >
+        <div>
           Powered by{' '}
           <span className={styles.logo}>
              MhdRezaei
           </span>
-        </a>
+          </div>
+        </Link>
       </footer>
     </div>
   )
