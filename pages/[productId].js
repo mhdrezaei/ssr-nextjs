@@ -3,7 +3,9 @@ import path from "path";
 import styles from "../styles/Home.module.css";
 function ProdutDetails(props) {
     const {product} = props
-    console.log(props)
+    if(!product){
+        return <h2 center>Loading...</h2>
+    }
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>{product.title}</h1>
@@ -15,13 +17,20 @@ function ProdutDetails(props) {
   );
 }
 
+
+async function getData(){
+    const filePath = path.join(process.cwd(), "data", "data.json");
+    const file = await fs.readFile(filePath);
+    const dataJson = JSON.parse(file);
+    return dataJson;
+}
+
 export async function getStaticProps(context) {
   const { params } = context;
   const pId = params.productId;
-  const filePath = path.join(process.cwd(), "data", "data.json");
-  const file = await fs.readFile(filePath);
-  const dataJson = JSON.parse(file);
-  const theProduct = dataJson.products.find((product) => product.id === pId);
+  const data = await getData();
+  console.log(data)
+  const theProduct = data.products.find((product) => product.id === pId);
 
   return {
     props: {
@@ -31,14 +40,13 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
+    const data = await getData();
+    const ids = data.products.map((product) => product.id);
+    const paramswithId = ids.map((id) => ({params : {productId :id}}));
+    console.log(paramswithId)
   return {
-    paths: [
-      { params: { productId: "p1" } },
-      { params: { productId: "p2" } },
-      { params: { productId: "p3" } },
-      { params: { productId: "p4" } },
-    ],
-    fallback : false
+    paths: paramswithId,
+    fallback : true
   };
 }
 
