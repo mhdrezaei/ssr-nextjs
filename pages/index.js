@@ -39,7 +39,7 @@ export default function Home(props) {
         <div>
           Powered by{' '}
           <span className={styles.logo}>
-             MhdRezaei
+             NextJS
           </span>
           </div>
         </Link>
@@ -48,15 +48,27 @@ export default function Home(props) {
   )
 }
 
-export async function getStaticProps(){
+export async function getStaticProps(context){
+  console.log('(Re-)Generating...');
   const dataPath = path.join(process.cwd(), 'data' , 'data.json');
   const product = await fs.readFile(dataPath);
   const productList = JSON.parse(product);
-  console.log(productList)
 
+  if(!productList){
+    return {
+      redirect : {
+        destination : '/no-data'
+      }
+    }
+  }
+
+  if (productList.products.length === 0) {
+    return { notFound: true };
+  }
   return {
       props :{
           products : productList.products
-      }
+      },
+      revalidate: 10,
   }
 }

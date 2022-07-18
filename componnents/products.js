@@ -2,8 +2,6 @@
 import ProductItem from "./product-item";
 function Products(props) {
   const {items} = props;
-  console.log(items)
-  console.log(props)
   return (
     <>
       {items.map((product) => {
@@ -19,9 +17,5 @@ function Products(props) {
     </>
   );
 }
-
-
-
-
 
 export default Products;
