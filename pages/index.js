@@ -1,9 +1,12 @@
+import fs from "fs/promises"
+import path from "path"
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Products from '../componnents/products'
 import Link from 'next/link'
-export default function Home() {
+export default function Home(props) {
+  const {products} = props
   return (
     <div className={styles.container}>
       <Head>
@@ -22,7 +25,7 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-        <Products/>
+        <Products items={products}/>
          
 
          
@@ -43,4 +46,17 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export async function getStaticProps(){
+  const dataPath = path.join(process.cwd(), 'data' , 'data.json');
+  const product = await fs.readFile(dataPath);
+  const productList = JSON.parse(product);
+  console.log(productList)
+
+  return {
+      props :{
+          products : productList.products
+      }
+  }
 }
