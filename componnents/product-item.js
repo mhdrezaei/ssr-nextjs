@@ -5,10 +5,10 @@ function ProductItem(props){
     return(
         
         <Link href={`/${props.id}`} >
-        <span className={styles.card} >
+        <a className={styles.card} >
         <h2>{props.title} &rarr;</h2>
         <p>{props.description}</p>
-        </span>
+        </a>
       </Link>
      
     );
